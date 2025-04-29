@@ -36,9 +36,30 @@
 
     <!-- 搜索结果表格 -->
     <div class="results">
+      <h3>搜索结果</h3>
+
+      <!-- 全选按钮 -->
+      <div class="select-all">
+        <label>
+          <input
+            type="checkbox"
+            v-model="selectAll"
+            @change="toggleSelectAll"
+          />
+          全选
+        </label>
+      </div>
+
       <table class="result-table">
         <thead>
           <tr>
+            <th>
+              <input
+                type="checkbox"
+                v-model="selectAll"
+                @change="toggleSelectAll"
+              />
+            </th>
             <th>用户名</th>
             <th>状态</th>
             <th>注册日期</th>
@@ -46,12 +67,15 @@
         </thead>
         <tbody>
           <tr v-for="(item, idx) in filteredData" :key="idx">
+            <td>
+              <input type="checkbox" v-model="selectedItems" :value="item" />
+            </td>
             <td>{{ item.username }}</td>
             <td>{{ item.status === "enabled" ? "启用" : "禁用" }}</td>
             <td>{{ item.registrationDate }}</td>
           </tr>
           <tr v-if="filteredData.length === 0">
-            <td colspan="3" class="no-data">暂无符合条件的数据</td>
+            <td colspan="4" class="no-data">暂无符合条件的数据</td>
           </tr>
         </tbody>
       </table>
@@ -80,6 +104,12 @@ const data = [
 
 // 响应式存放过滤后的数据
 const filteredData = ref([...data]);
+
+// 当前选中的项
+const selectedItems = ref([]);
+
+// 全选状态
+const selectAll = ref(false);
 
 // 搜索方法
 function handleSearch() {
@@ -110,6 +140,17 @@ function handleSearch() {
 function resetForm() {
   filter.value = { username: "", status: "", startDate: "", endDate: "" };
   filteredData.value = [...data];
+  selectedItems.value = [];
+  selectAll.value = false;
+}
+
+// 切换全选状态
+function toggleSelectAll() {
+  if (selectAll.value) {
+    selectedItems.value = filteredData.value; // 选择所有项
+  } else {
+    selectedItems.value = []; // 取消选择
+  }
 }
 </script>
 
@@ -190,5 +231,9 @@ function resetForm() {
   text-align: center;
   color: #888;
   font-style: italic;
+}
+
+.select-all {
+  margin-bottom: 10px;
 }
 </style>

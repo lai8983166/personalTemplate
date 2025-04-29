@@ -8,7 +8,7 @@ import { ref } from "vue";
 import SeleList from "../components/SeleList.vue";
 //import router from "../router";
 const filterList = ref([
-  { name: "elementui-plus", route: "filter_elemnetuiplus" },
-  { name: "raw", route: "filter_raw" },
+  { name: "elementui-plus", route: "form_elemnetuiplus" },
+  { name: "raw", route: "form_raw" },
 ]);
 </script>

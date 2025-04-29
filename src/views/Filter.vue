@@ -48,7 +48,20 @@
       <!-- 搜索结果 -->
       <div class="search-results">
         <h3>搜索结果</h3>
-        <el-table :data="filteredData" style="width: 100%" border>
+        <!-- 全选按钮 -->
+        <el-button @click="toggleSelectAll">{{
+          selectAll ? "取消全选" : "全选"
+        }}</el-button>
+        <el-table
+          :data="filteredData"
+          style="width: 100%"
+          border
+          ref="table"
+          v-model:selection="selectedRows"
+        >
+          <!-- 选择框 -->
+          <el-table-column type="selection" width="55" />
+
           <el-table-column prop="username" label="用户名" width="150" />
           <el-table-column prop="status" label="状态" width="180" />
           <el-table-column prop="registrationDate" label="注册日期" />
@@ -79,6 +92,12 @@ const data = [
 // 筛选后的数据
 const filteredData = ref(data);
 
+// 被选中的行数据
+const selectedRows = ref([]);
+
+// 控制全选/取消全选按钮
+const selectAll = ref(false);
+
 // 日期选择的限制选项
 const datePickerOptions = {
   disabledDate(time) {
@@ -107,7 +126,24 @@ const handleSearch = () => {
 const resetForm = () => {
   filter.value = { username: "", status: "", dateRange: [] };
   filteredData.value = data; // 重置为原始数据
+  selectedRows.value = []; // 清除选中的项
+  selectAll.value = false; // 重置全选状态
 };
+
+// 切换全选状态
+const toggleSelectAll = () => {
+  if (selectAll.value) {
+    selectedRows.value = [];
+  } else {
+    selectedRows.value = filteredData.value;
+  }
+  selectAll.value = !selectAll.value;
+};
+
+// 自定义选择器
+/*const selectable = (row) => {
+  return true; // 允许所有行都可以被选中
+};*/
 </script>
 
 <style scoped>

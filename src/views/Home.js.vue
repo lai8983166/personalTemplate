@@ -17,9 +17,9 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const items = ref([
   { name: "筛选器", route: "filterSele" },
-  { name: "分页", route: "pagination" },
-  { name: "排序", route: "sort" },
-  { name: "带有验证的表单", route: "form-validation" },
+  { name: "分页", route: "paginationSele" },
+  { name: "排序", route: "sortSele" },
+  { name: "带有验证的表单", route: "formSele" },
   { name: "图片上传", route: "image-upload" },
   { name: "图标", route: "icons" },
   { name: "实时聊天", route: "chat" },
