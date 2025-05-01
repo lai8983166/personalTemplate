@@ -20,14 +20,20 @@ const items = ref([
   { name: "分页", route: "paginationSele" },
   { name: "排序", route: "sortSele" },
   { name: "带有验证的表单", route: "formSele" },
-  { name: "图片上传", route: "image-upload" },
+  { name: "图片上传", route: "picuploadSele" },
   { name: "图标", route: "icons" },
   { name: "实时聊天", route: "chat" },
   { name: "拖拽", route: "drag" },
 ]);
 
-const handleItemClick = (item) => {
+/*const handleItemClick = (item) => {
   router.push({ name: item.route });
+};*/
+const handleItemClick = (item) => {
+  router.push({
+    name: "Selection", // 你的路由名称
+    params: { pageType: item.route }, // 把 item.route 当作 pageType 传进去
+  });
 };
 </script>
 
